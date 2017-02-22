@@ -50,6 +50,18 @@
             return $matching_restaurants;
         }
 
+        static function find($id)
+        {
+            $found_cuisine;
+            $cuisines = Cuisine::getAll();
+            foreach ($cuisines as $cuisine) {
+                if ($cuisine->getId() == $id) {
+                    $found_cuisine = $cuisine;
+                }
+            }
+            return $found_cuisine;
+        }
+
         static function getAll()
         {
             $returned_cuisines = $GLOBALS['DB']->query("SELECT * FROM cuisines;");

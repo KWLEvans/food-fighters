@@ -142,5 +142,22 @@
             //Assert
             $this->assertEquals([$test_Restaurant2], $result);
         }
+
+        function test_find()
+        {
+            //Arrange
+            $name = "Icelandic";
+            $test_cuisine = new Cuisine($name);
+            $test_cuisine->save();
+            $name2 = "Canadian";
+            $test_cuisine2 = new Cuisine($name);
+            $test_cuisine2->save();
+
+            //Act
+            $result = Cuisine::find($test_cuisine->getId());
+
+            //Assert
+            $this->assertEquals($test_cuisine, $result);
+        }
     }
 ?>
