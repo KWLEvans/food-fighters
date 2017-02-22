@@ -33,6 +33,20 @@
             //Assert
             $this->assertEquals($test_cuisine, $result[0]);
         }
+
+        function test_getId()
+        {
+            //Arrange
+            $name = "Icelandic";
+            $test_cuisine = new Cuisine($name);
+            $test_cuisine->save();
+
+            //Act
+            $result = $test_cuisine->getId();
+
+            //Assert
+            $this->assertEquals(true, is_numeric($result));
+        }
     }
 
 ?>
