@@ -32,6 +32,12 @@
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
+        function updateName($new_name)
+        {
+            $GLOBALS['DB']->exec("UPDATE cuisines SET name = '{$new_name}' WHERE id = {$this->getId()};");
+            $this->setName($new_name);
+        }
+
         static function getAll()
         {
             $returned_cuisines = $GLOBALS['DB']->query("SELECT * FROM cuisines;");
