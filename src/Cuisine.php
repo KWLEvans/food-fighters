@@ -38,6 +38,18 @@
             $this->setName($new_name);
         }
 
+        function getRestaurants()
+        {
+            $restaurants = Restaurant::getAll();
+            $matching_restaurants = [];
+            foreach ($restaurants as $restaurant) {
+                if ($restaurant->getCuisineId() == $this->getId()) {
+                    array_push($matching_restaurants, $restaurant);
+                }
+            }
+            return $matching_restaurants;
+        }
+
         static function getAll()
         {
             $returned_cuisines = $GLOBALS['DB']->query("SELECT * FROM cuisines;");
@@ -55,5 +67,6 @@
         {
             $GLOBALS['DB']->exec("DELETE FROM cuisines;");
         }
+
     }
 ?>

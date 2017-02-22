@@ -121,9 +121,9 @@
             //Act
             $test_Restaurant->save();
             $test_Restaurant->updateName($new_name);
+            $result = Restaurant::getAll();
 
             //Assert
-            $result = Restaurant::getAll();
             $this->assertEquals($new_name, $result[0]->getName());
         }
     }

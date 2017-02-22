@@ -108,8 +108,39 @@
             $new_name = "New British";
             $test_cuisine->updateName($new_name);
             $result = Cuisine::getAll();
+
             //Assert
             $this->assertEquals($new_name, $result[0]->getName());
+        }
+
+        function test_getRestaurants()
+        {
+            //Arrange
+            $name = "Canadian";
+            $test_cuisine = new Cuisine($name);
+            $test_cuisine->save();
+
+            $name = "Sigur Roast";
+            $description = "ég gaf ykkur von sem varð að vonbrigðum.. þetta er ágætis byrjun";
+            $price = "high";
+            $neighborhood = "Cully";
+            $cuisine_id = 2;
+            $test_Restaurant = new Restaurant($name, $description, $price, $neighborhood, $cuisine_id);
+            $test_Restaurant->save();
+
+            $name2 = "Avril leBean";
+            $description2 = "Why go and make things so complicated? Its just beans.";
+            $price2 = "low";
+            $neighborhood2 = "Sullivans Gulch";
+            $cuisine_id2 = $test_cuisine->getId();
+            $test_Restaurant2 = new Restaurant($name2, $description2, $price2, $neighborhood2, $cuisine_id2);
+            $test_Restaurant2->save();
+
+            //Act
+            $result = $test_cuisine->getRestaurants();
+
+            //Assert
+            $this->assertEquals([$test_Restaurant2], $result);
         }
     }
 ?>
