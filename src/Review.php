@@ -57,6 +57,13 @@
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
+        function update($new_rating, $new_review)
+        {
+            $GLOBALS['DB']->exec("
+            UPDATE reviews SET rating = {$new_rating} WHERE id = {$this->getId()};
+            UPDATE reviews SET review = '{$new_review}' WHERE id = {$this->getId()};");
+        }
+
         static function getAll()
         {
             $reviews = [];
