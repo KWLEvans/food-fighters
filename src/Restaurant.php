@@ -88,6 +88,31 @@
             $this->setName($new_name);
         }
 
+        function getReviews()
+        {
+            $returned_reviews = Review::getAll();
+            $reviews = [];
+
+            foreach ($returned_reviews as $review) {
+                if ($review->getRestaurantId() == $this->getId()) {
+                    array_push($reviews, $review);
+                }
+            }
+            return $reviews;
+        }
+
+        static function find($id)
+        {
+            $found_restaurants;
+            $restaurants = Restaurant::getAll();
+            foreach ($restaurants as $restaurant) {
+                if ($restaurant->getId() == $id) {
+                    $found_restaurants = $restaurant;
+                }
+            }
+            return $found_restaurants;
+        }
+
         static function getAll()
         {
             $returned_restaurants = $GLOBALS['DB']->query("SELECT * FROM restaurants;");

@@ -1,0 +1,40 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{ restaurant.getName() }}{% endblock %}
+
+{% block content %}
+
+    <h2>{{ restaurant.getName() }}</h2>
+    <ul>
+        <li>{{ restaurant.getDescription }}</li>
+        <li>{{ restaurant.getPrice }}</li>
+        <li>{{ restaurant.getNeighborhood }}</li>
+    </ul>
+
+    <form action="/add_review/{{restaurant.getId()}}" method="post">
+        <label for="rating">Rating:</label>
+        <input id="rating" name="rating" type="number">
+        <label for="review">Review:</label>
+        <textarea id="review" name="review" rows="4"></textarea>
+        <button type="submit" class="btn">Add Review</button>
+    </form>
+
+
+    {% if reviews is not empty %}
+    <h3>Reviews:</h3>
+    <ul>
+        {% for review in reviews %}
+            <li>
+                <h4>
+                    {% for i in 1..review.getRating()%}
+                    <span>star</span>
+                    {% endfor %}
+                    {{ review.getUserId() }} says:
+                </h4>
+                <p>{{ review.getReview() }}</p>
+            </li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+
+{% endblock %}
