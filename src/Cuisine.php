@@ -28,13 +28,15 @@
 
         function save()
         {
-            $GLOBALS['DB']->exec("INSERT INTO cuisines (name) VALUES ('{$this->getName()}')");
+            $exec = $GLOBALS['DB']->prepare("INSERT INTO cuisines (name) VALUES (:name)");
+            $exec->execute([':name' => $this->getName()]);
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
         function updateName($new_name)
         {
-            $GLOBALS['DB']->exec("UPDATE cuisines SET name = '{$new_name}' WHERE id = {$this->getId()};");
+            $exec = $GLOBALS['DB']->prepare("UPDATE cuisines SET name = :name WHERE id = :id;");
+            $exec->execute([':name' => $new_name, ':id' => $this->getId()]);
             $this->setName($new_name);
         }
 

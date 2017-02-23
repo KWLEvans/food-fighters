@@ -42,7 +42,7 @@
             $name = "Sigur Roast";
             $description = "ég gaf ykkur von sem varð að vonbrigðum.. þetta er ágætis byrjun";
             $price = "high";
-            $neighborhood = "Cully";
+            $neighborhood = "Cul'ly";
             $cuisine_id = 2;
             $test_Restaurant = new Restaurant($name, $description, $price, $neighborhood, $cuisine_id);
 
@@ -114,7 +114,7 @@
             $price = "high";
             $neighborhood = "Cully";
             $cuisine_id = 2;
-            $new_name = "Cigar Roost";
+            $new_name = "Ci'gar R\oost";
 
             $test_Restaurant = new Restaurant($name, $description, $price, $neighborhood, $cuisine_id);
 

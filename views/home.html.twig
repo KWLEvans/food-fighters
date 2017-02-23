@@ -4,13 +4,27 @@
 
 {% block content %}
 
-        <form action="/cuisines" method="post">
+        <form action="/add_cuisine" method="post">
            <label for="name">Cuisine name:</label>
            <input id="name" name="name" type="text">
 
            <button class="btn-success" type="submit">Add cuisine</button>
         </form>
-    {% for cuisine in cuisines %}
-        <a href="/cuisines/{{cuisine.getId()}}">{{cuisine.getName()}}</a>
-    {% endfor %}
+        <div class="row">
+            {% if cuisines is not empty %}
+                <div class="col col-3"><strong>Cuisines:</strong><ul>
+                    {% for cuisine in cuisines %}
+                        <li><a href="/cuisines/{{cuisine.getId()}}">{{cuisine.getName()}}</a></li>
+                    {% endfor %}
+                </ul></div>
+            {% endif %}
+
+            {% if restaurants is not empty %}
+                <div class="col col-6"><strong>Restaurants:</strong><ul>
+                    {% for restaurant in restaurants %}
+                        <li><a href="/restaurants/{{restaurant.getId()}}">{{restaurant.getName()}}</a></li>
+                    {% endfor %}
+                </ul></div>
+            {% endif %}
+        </div>
 {% endblock %}

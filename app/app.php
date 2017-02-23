@@ -17,7 +17,13 @@
     $app->register(new Silex\Provider\TwigServiceProvider(), ["twig.path" => __DIR__."/../views"]);
 
     $app->get('/', function() use($app) {
-        return $app["twig"]->render("home.html.twig", ['cuisines' => Cuisine::getAll()]);
+        return $app["twig"]->render("home.html.twig", ['cuisines' => Cuisine::getAll(), 'restaurants' => Restaurant::getAll()]);
+    });
+
+    $app->post('/add_cuisine', function() use ($app) {
+        $new_cuisine = new Cuisine($_POST['name']);
+        $new_cuisine->save();
+        return $app->redirect('/');
     });
 
     $app->get("/cuisines/{id}", function($id) use($app) {

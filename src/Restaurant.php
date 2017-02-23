@@ -76,13 +76,15 @@
 
         function save()
         {
-            $GLOBALS['DB']->exec("INSERT INTO restaurants (name, description, price, neighborhood, cuisine_id) VALUES ('{$this->getName()}', '{$this->getDescription()}', '{$this->getPrice()}',  '{$this->getNeighborhood()}', {$this->getCuisineId()});");
+            $exec = $GLOBALS['DB']->prepare("INSERT INTO restaurants (name, description, price, neighborhood, cuisine_id) VALUES (:name, :description, :price, :neighborhood, :cuisine_id)");
+            $exec->execute([':name' => $this->getName(), ':description' => $this->getDescription(), ':price'=> $this->getPrice(), ':neighborhood' => $this->getNeighborhood(), ':cuisine_id' => $this->getCuisineId()]);
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
         function updateName($new_name)
         {
-            $GLOBALS['DB']->exec("UPDATE restaurants SET name = '{$new_name}' WHERE id = {$this->getId()};");
+            $exec = $GLOBALS['DB']->prepare("UPDATE restaurants SET name = :name WHERE id = :id;");
+            $exec->execute([':name' => $new_name, ':id' => $this->getId()]);
             $this->setName($new_name);
         }
 

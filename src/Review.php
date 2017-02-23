@@ -53,15 +53,18 @@
 
         function save()
         {
-            $GLOBALS['DB']->exec("INSERT INTO reviews (user_id, restaurant_id, rating, review) VALUES ({$this->getUserId()}, {$this->getRestaurantId()}, {$this->getRating()}, '{$this->getReview()}');");
+            $exec = $GLOBALS['DB']->prepare("INSERT INTO reviews (user_id, restaurant_id, rating, review) VALUES (:user_id, :restaurant_id, :rating, :review);");
+            $exec->execute([':user_id' => $this->getUserId(), ':restaurant_id' => $this->getRestaurantId(), ':rating' => $this->getRating(), ':review' => $this->getReview()]);
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
         function update($new_rating, $new_review)
         {
-            $GLOBALS['DB']->exec("
-            UPDATE reviews SET rating = {$new_rating} WHERE id = {$this->getId()};
-            UPDATE reviews SET review = '{$new_review}' WHERE id = {$this->getId()};");
+            $exec = $GLOBALS['DB']->prepare("UPDATE reviews SET rating = :rating WHERE id = :id;");
+            $exec->execute([':rating' => $new_rating, ':id' => $this->getId()]);
+            
+            $exec = $GLOBALS['DB']->prepare("UPDATE reviews SET review = :review WHERE id = :id;");
+            $exec->execute([':review' => $new_review, ':id' => $this->getId()]);
         }
 
         static function getAll()

@@ -100,7 +100,7 @@
         function test_updateName()
         {
             //Arrange
-            $name = "Canadian";
+            $name = "Canadi'an";
             $test_cuisine = new Cuisine($name);
             $test_cuisine->save();
 
