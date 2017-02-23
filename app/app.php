@@ -6,11 +6,34 @@
     require_once __DIR__."/../src/Review.php";
 
     $app = new Silex\Application();
+
+    $app['debug'] = true;
+
+    $server = 'mysql:unix_socket=/Applications/MAMP/tmp/mysql/mysql.sock;dbname=restaurants';
+    $username = 'root';
+    $password = 'root';
+    $DB = new PDO($server, $username, $password);
+
     $app->register(new Silex\Provider\TwigServiceProvider(), ["twig.path" => __DIR__."/../views"]);
 
     $app->get('/', function() use($app) {
-        $result = 'hello';
-        return $app["twig"]->render("root.html.twig", ['result' => $result]);
+        return $app["twig"]->render("home.html.twig", ['cuisines' => Cuisine::getAll()]);
+    });
+
+    $app->get("/cuisines/{id}", function($id) use($app) {
+        $cuisine = Cuisine::find($id);
+        return $app['twig']->render('cuisine.html.twig', ['cuisine' => $cuisine, 'restaurants' => $cuisine->getRestaurants()]);
+    });
+
+    $app->post("/cuisines/{id}", function($id) use($app) {
+        $cuisine = Cuisine::find($id);
+        $name = $_POST['name'];
+        $description = $_POST['description'];
+        $price = $_POST['price'];
+        $neighborhood = $_POST['neighborhood'];
+        $new_Restaurant = new Restaurant($name, $description, $price, $neighborhood, $id);
+        $new_Restaurant->save();
+        return $app['twig']->render('cuisine.html.twig', ['cuisine' => $cuisine, 'restaurants' => $cuisine->getRestaurants()]);
     });
 
     return $app;

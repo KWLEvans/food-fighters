@@ -1,0 +1,16 @@
+{% extends "base.html.twig" %}
+
+{% block title %}Home{% endblock %}
+
+{% block content %}
+
+        <form action="/cuisines" method="post">
+           <label for="name">Cuisine name:</label>
+           <input id="name" name="name" type="text">
+
+           <button class="btn-success" type="submit">Add cuisine</button>
+        </form>
+    {% for cuisine in cuisines %}
+        <a href="/cuisines/{{cuisine.getId()}}">{{cuisine.getName()}}</a>
+    {% endfor %}
+{% endblock %}

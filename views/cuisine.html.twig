@@ -1,0 +1,33 @@
+{% extends "base.html.twig" %}
+
+{% block title %}{{cuisine.getName()}}{% endblock %}
+
+{% block content %}
+    {% if restaurants is not empty %}
+        <ul>
+            {% for restaurant in restaurants %}
+                <li>{{ restaurant.getName() }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+
+    <form action="/cuisines/{{cuisine.getId()}}" method="post">
+        <label for="name">Enter a restaurant name:</label>
+        <input id="name" name="name" type="text">
+        <label for="description">Enter a restaurant description:</label>
+        <textarea id="description" name="description" rows="5"></textarea>
+        <label for="price">Price range:</label>
+        <select id="price" name="price">
+            <option value="low">$</option>
+            <option value="medium">$$</option>
+            <option value="high">$$$</option>
+        </select>
+        <label for="neighborhood">Neighborhood</label>
+        <select id="neighborhood" name="neighborhood">
+            <option value="north-east">North-East</option>
+            <option value="north">North</option>
+            <option value="south-west">South-West</option>
+        </select>
+        <button class="btn" type="submit">Add Restaurant</button>
+    </form>
+{% endblock %}
