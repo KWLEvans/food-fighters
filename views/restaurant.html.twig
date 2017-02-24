@@ -29,7 +29,7 @@
                     {% for i in 1..review.getRating()%}
                     <span>star</span>
                     {% endfor %}
-                    {{ review.getUserId() }} says:
+                    {{ review.getUserName() }} says:
                 </h4>
                 <p>{{ review.getReview() }}</p>
             </li>

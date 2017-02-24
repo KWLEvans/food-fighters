@@ -36,6 +36,35 @@
             $this->name = $new_name;
         }
 
+        function verifyPassword($password)
+        {
+            if ($this->password == $password) {
+                return true;
+            }
+        }
+
+        static function find($id)
+        {
+            $found_user;
+            $users = User::getAll();
+            foreach ($users as $user) {
+                if ($user->getId() == $id) {
+                    $found_user = $user;
+                }
+            }
+            return $found_user;
+        }
+
+        static function logIn($username, $password)
+        {
+            $users = User::getAll();
+            foreach ($users as $user) {
+                if ($user->getName() == $username && $user->verifyPassword($password)) {
+                    $_SESSION['user'] = $user;
+                }
+            }
+        }
+
         static function getAll()
         {
             $users = [];

@@ -6,6 +6,7 @@
         private $rating;
         private $review;
         private $id;
+        private $user_name;
 
         function __construct($user_id, $restaurant_id, $rating, $review, $id = null)
         {
@@ -51,6 +52,10 @@
             return $this->id;
         }
 
+        function getUserName() {
+            return $this->user_name;
+        }
+
         function save()
         {
             $exec = $GLOBALS['DB']->prepare("INSERT INTO reviews (user_id, restaurant_id, rating, review) VALUES (:user_id, :restaurant_id, :rating, :review);");
@@ -62,9 +67,21 @@
         {
             $exec = $GLOBALS['DB']->prepare("UPDATE reviews SET rating = :rating WHERE id = :id;");
             $exec->execute([':rating' => $new_rating, ':id' => $this->getId()]);
-            
+
             $exec = $GLOBALS['DB']->prepare("UPDATE reviews SET review = :review WHERE id = :id;");
             $exec->execute([':review' => $new_review, ':id' => $this->getId()]);
+        }
+
+        function export()
+        {
+            $found_user;
+            $users = User::getAll();
+            foreach ($users as $user) {
+                if ($user->getId() == $this->getUserId()) {
+                    $found_user = $user;
+                }
+            }
+            $this->user_name = $found_user->getName();
         }
 
         static function getAll()
